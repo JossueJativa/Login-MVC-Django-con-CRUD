@@ -1,0 +1,50 @@
+{% extends 'layout.html' %}
+{% load static %}
+
+{% block title %} Home {% endblock %}
+
+{% block body %}
+<h1>Welcome {{ user.username }}</h1>
+<a href="{% url 'intro:logout' %}">Logout</a>
+<br><br>
+<a class="btn btn-primary" href="{% url 'intro:home' %}">Volver a tas tablas</a>
+
+<form action="{% url 'intro:edit' product.id %}" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="container text-center">
+        <div class="row">
+            <div class="col-3">
+                <label for="name">Nombre:</label>
+            </div>
+            <div class="col-7">
+                <input type="text" name="name" id="name" class="form-control" value="{{ product.name }}" required>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-3">
+                <label for="price">Precio:</label>
+            </div>
+            <div class="col-7">
+                <input type="number" name="price" id="price" class="form-control" value="{{ product.price }}" required>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-3">
+                <label for="stock">Stock:</label>
+            </div>
+            <div class="col-7">
+                <input type="number" name="stock" id="stock" class="form-control" value="{{ product.stock }}" required>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-3">
+                <label for="photo">Foto:</label>
+            </div>
+            <div class="col-7">
+                <input type="file" name="photo" id="photo" class="form-control">
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Editar producto</button>
+    </div>
+</form>
+{% endblock %}

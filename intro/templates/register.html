@@ -1,0 +1,64 @@
+{% extends 'layout.html' %}
+{% load static %}
+
+{% block title %} Register {% endblock %}
+
+{% block body %}
+<div class="background">
+    <div class="box-login">
+        <div class="container text-center">
+            <div class="row">
+                <div class="col img_responsive">
+                    <img class="img_login" src="{% static 'img/imagen login.jpg' %}" alt="img_login" width="100">
+                </div>
+                <div class="col">
+                    <h6 class="register">¿Ya tienes cuenta?<span><a href="{% url 'intro:login' %}"> Volver al login</a></span></h6>
+                    {% if error %}
+                        <div class="alert alert-danger" role="alert">
+                            {{ error }}
+                        </div>
+                    {% endif %}
+                    <h1 class="principal-text">Registrate ahora!</h1>
+                    <h3 class="presentation">Necesitaremos un poco de informacion para tu registro</h3>
+
+                    <form action="{% url 'intro:login' %}" method="post">
+                        {% csrf_token %}
+                        <div class="box_input">
+                            <div class="input_info">
+                                <input type="text" name="username" placeholder="Ingrese su usuario" required>
+                            </div>
+                            <div class="input_info">
+                                <input type="text" name="email" placeholder="Ingrese su correo" required>
+                            </div>
+                            <div class="input_info">
+                                <div class="password-container">
+                                    <input type="password" name="password" id="password" placeholder="Ingrese su contraseña" required>
+                                    <button type="button" class="toggle-password" onclick="togglePasswordVisibility('password')">
+                                        <span class="material-symbols-outlined">
+                                            visibility
+                                        </span>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="input_info">
+                                <div class="password-container">
+                                    <input type="password" name="password2" id="password2" placeholder="Confirma tu contraseña" required>
+                                    <button type="button" class="toggle-password" onclick="togglePasswordVisibility('password')">
+                                        <span class="material-symbols-outlined">
+                                            visibility
+                                        </span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="box_button">
+                            <button type="submit">Registrate</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

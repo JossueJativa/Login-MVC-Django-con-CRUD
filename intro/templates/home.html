@@ -1,0 +1,96 @@
+{% extends 'layout.html' %}
+{% load static %}
+
+{% block title %} Home {% endblock %}
+
+{% block body %}
+<h1>Welcome {{ user.username }}</h1>
+<a href="{% url 'intro:logout' %}">Logout</a>
+<br><br>
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+    Crear un producto
+</button>
+<br><br>
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">Precio</th>
+            <th scope="col">Stock</th>
+            <th scope="col">Foto</th>
+            <th scope="col">Edit</th>
+            <th scope="col">Delete</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for product in products %}
+        <tr>
+            <th scope="row">{{ product.id }}</th>
+            <td>{{ product.name }}</td>
+            <td>{{ product.price }}</td>
+            <td>{{ product.stock }}</td>
+            <td><img class="img-size" src="{{ product.photo.url }}" alt="{{ product.name }}" width="100"></td>
+            <td><a href="{% url 'intro:edit' product.id %}">Edit</a></td>
+            <td><a href="{% url 'intro:delete' product.id %}">Delete</a></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<!-- Modal -->
+<form action="{% url 'intro:home' %}" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Crear un producto</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="container text-center">
+                    <div class="row">
+                        <div class="col-3">
+                            <label for="name">Nombre:</label>
+                        </div>
+                        <div class="col-7">
+                            <input type="text" name="name" id="name" class="form-control" required>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-3">
+                            <label for="price">Precio:</label>
+                        </div>
+                        <div class="col-7">
+                            <input type="number" name="price" id="price" class="form-control" required>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-3">
+                            <label for="stock">Stock:</label>
+                        </div>
+                        <div class="col-7">
+                            <input type="number" name="stock" id="stock" class="form-control" required>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-3">
+                            <label for="photo">Foto:</label>
+                        </div>
+                        <div class="col-7">
+                            <input type="file" name="photo" id="photo" class="form-control" required>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="submit" class="btn btn-primary">Crear producto</button>
+            </div>
+        </div>
+        </div>
+    </div>
+</form>
+{% endblock %}
